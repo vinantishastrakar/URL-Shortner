@@ -5,11 +5,8 @@ import string
 # Create your models here.
 class DataUrl(models.Model):
     longurl = models.URLField(max_length=2000)
-    shorturl = models.CharField(max_length=20, unique=True)
+    shorturl = models.CharField(max_length=20)
 
-    def __str__(self):
-        return "Short URL for: " + self.longurl + "is: " + self.shorturl
-    
     @staticmethod
     def generate_shorturl():
         length = 10
@@ -17,4 +14,14 @@ class DataUrl(models.Model):
             shorturl = "".join(random.choices(string.ascii_letters + string.digits, k=length))
             if not DataUrl.objects.filter(shorturl=shorturl).exists():
                 return shorturl
-            super().save()
+    
+    def save(self, *args, **kwargs):
+        if not self.shorturl:
+            self.shorturl = self.generate_shorturl()
+        super().save(*args, **kwargs)
+
+
+    def __str__(self):
+        return self.longurl
+    
+   

@@ -21,5 +21,9 @@ class DataUrlListCreateAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-# class DataUrlRetrieveUpdateDestroyAPIView(APIView):
-   
+class DataUrlRedirect(APIView):
+
+    def get(self, request, shorturl):
+        url = get_object_or_404(DataUrl, shorturl=shorturl)
+        url.save()
+        return redirect(url.longurl)
