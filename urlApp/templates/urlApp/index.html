@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" type = "text/css" href = "{% static 'urlApp/index.css' %}">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>🔗 URL Shortner</h1>
+    <h2>Shorten long URLs and expand shorter ones</h2>
+
+    <div class = 'inputContainers'>
+        <label for = 'urlInput' id = 'inputLabel'> Enter a long URL to shorten: </label>
+        <input type = 'url' id = 'urlInput' placeholder="https://example.com/very/long/url/path/here">
+    </div>
+
+    <div class = 'buttons'>
+        <a class = 'shortBtn'> 🚀 Shorten URL </button>
+        <a class = 'clear-Btn'> 🗑️ Clear </button>
+    </div>
+
+    <div class="result-section" id="resultSection">
+        <!-- <h3 id="resultTitle">Shortened URL:</h3> -->
+        <div class="url-display" id="resultUrl">
+            <button class="copy-btn" onclick="copyToClipboard()">📋 Copy</button>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector(".shortBtn").addEventListener("click", processUrl);
+
+        function processUrl() {
+            const urlInput = document.getElementById('urlInput').value;
+            const data = { url: urlInput };
+            
+            fetch("http://localhost:8000/urls/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data),
+        })
+        .then(data => {
+            document.querySelector('.result-section').innerHTML = "<h1>Shortened URL: </h1>" + data.result;
+            })
+        }
+
+        // function switchTab(mode) {
+        //     currentMode = mode;
+        //     const tabs = document.querySelectorAll('.tab');
+        //     tabs.forEach(tab => tab.classList.remove('active'));
+            
+        //     if (mode === 'shorten') {
+        //         tabs[0].classList.add('active');
+        //         document.getElementById('inputLabel').textContent = 'Enter a long URL to shorten:';
+        //         document.getElementById('process-Btn').innerHTML = '🚀 Shorten URL';
+        //         urlInput.placeholder = 'https://example.com/very/long/url/path/here';
+        //     } else {
+        //         tabs[1].classList.add('active');
+        //         document.getElementById('inputLabel').textContent = 'Enter a short URL to expand:';
+        //         document.getElementById('process-Btn').innerHTML = '🔍 Expand URL';
+        //         urlInput.placeholder = 'https://short.ly/abc123 or abc123';
+        //     }
+            
+        //     clearAll();
+        // }
+    </script>   
+</body>
+</html>
