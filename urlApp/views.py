@@ -18,7 +18,9 @@ class DataUrlListCreateAPIView(APIView):
         return Response(serializer.data)
     
     def post(self,request):
+        print(request.data)
         serializer = DataUrlSerializer(data=request.data, context={'request':request})
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

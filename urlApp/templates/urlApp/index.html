@@ -38,7 +38,7 @@
             const urlInput = document.getElementById('urlInput').value;
             const data = { longurl: urlInput };
             
-            fetch("http://localhost:8000/urls/", {
+            fetch("/urls/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
