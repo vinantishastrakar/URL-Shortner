@@ -16,11 +16,12 @@
     <div class = 'inputContainers'>
         <label for = 'urlInput' id = 'inputLabel'> Enter a long URL to shorten: </label>
         <input type = 'url' id = 'urlInput' placeholder="https://example.com/very/long/url/path/here">
+
     </div>
 
     <div class = 'buttons'>
-        <a class = 'shortBtn'> 🚀 Shorten URL </button>
-        <a class = 'clear-Btn'> 🗑️ Clear </button>
+        <button class = 'shortBtn'> 🚀 Shorten URL </button>
+        <button class = 'clear-Btn' onclick = "clearAll()"> 🗑️ Clear </button>
     </div>
 
     <div class="result-section" id="resultSection">
@@ -35,7 +36,7 @@
 
         function processUrl() {
             const urlInput = document.getElementById('urlInput').value;
-            const data = { url: urlInput };
+            const data = { longurl: urlInput };
             
             fetch("http://localhost:8000/urls/", {
             method: "POST",
@@ -44,9 +45,15 @@
             },
             body: JSON.stringify(data),
         })
+        .then(response => response.json())
         .then(data => {
             document.querySelector('.result-section').innerHTML = "<h1>Shortened URL: </h1>" + data.result;
             })
+        }
+    
+        function clearAll() {
+            document.getElementById('urlInput').value = '';
+            document.getElementById('resultSection').innerHTML = '';
         }
 
         // function switchTab(mode) {

@@ -7,6 +7,7 @@ from rest_framework import status
 from .models import DataUrl
 from .serializers import DataUrlSerializer
 
+
 # Create your views here.
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -24,7 +25,7 @@ class DataUrlListCreateAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@method_decorator(csrf_exempt, name='dispatch')    
+@method_decorator(csrf_exempt, name='dispatch')
 class DataUrlRetrieveUpdateDestroyAPIView(APIView):
     def get(self, request, shorturl):
         url = get_object_or_404(DataUrl, shorturl=shorturl)
@@ -45,7 +46,7 @@ class DataUrlRetrieveUpdateDestroyAPIView(APIView):
         return Response(status=status.HTTP_404_NOT_FOUND)
     
 
-@method_decorator(csrf_exempt, name='dispatch')        
+@method_decorator(csrf_exempt, name='dispatch')       
 class DataUrlRedirect(APIView):
     def get(self, request, shorturl):
         url = get_object_or_404(DataUrl, shorturl=shorturl)
