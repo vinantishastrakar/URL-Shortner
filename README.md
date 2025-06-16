@@ -179,7 +179,7 @@ url-shortener/
 | Field | Type | Description |
 |-------|------|-------------|
 | id | AutoField | Primary key |
-| long_url | URLField | Original long URL |
+| longurl | URLField | Original long URL |
 
 
 ## Error Handling
